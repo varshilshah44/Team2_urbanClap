@@ -50,7 +50,9 @@ const userSchema = new mongoose.Schema({
         type:Date,
         default:Date.now()
     },
-    updatedAt:Date
+    updatedAt:Date,
+    userToken:String,
+    userTokenExpire:Date
 }, { collection: "user" });
 
 const user = mongoose.model("user", userSchema);
