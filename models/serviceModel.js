@@ -41,15 +41,3 @@ const serviceSchema = new mongoose.Schema({
 }, { collection: 'service' })
 
 exports.service = mongoose.model('service', serviceSchema);
-
-/**
- * 2) services
-
-- categoryId :
-- serviceName : "Ac Re..",
-- servicePrice : 20
-- serviceDescription :
-####- serviceTime:######
-####- active: Boolean######
-- vendorId : array of vendorIds who provide this service , vendorId means userId
- */

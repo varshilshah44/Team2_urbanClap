@@ -9,8 +9,3 @@ const categorySchema = new mongoose.Schema({
 }, { collection: 'category' })
 
 exports.category = mongoose.model('category', categorySchema);
-
-/**
-
-3) category
--catrgoryName : "" String */
