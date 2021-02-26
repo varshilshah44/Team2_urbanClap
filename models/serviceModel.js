@@ -40,8 +40,8 @@ const serviceSchema = new mongoose.Schema({
     updatedAt: Date
 }, { collection: 'service' })
 
-exports.service = mongoose.model('service', serviceSchema);
-
+const service = mongoose.model('service', serviceSchema);
+module.exports = service;
 /**
  * 2) services
 

@@ -1,4 +1,5 @@
-const mongoose = require("../dbconnection");
+const mongoose = require('../dbconnection');
+const bcrypt = require('bcryptjs');
 
 const userSchema = new mongoose.Schema({
     userName:{
@@ -40,7 +41,10 @@ const userSchema = new mongoose.Schema({
         type:String,
         lowercase:true,
         required:[true,'userRole must be required'],
-        enum:['user','vendor']
+        enum:{
+            values:["user","vendor"],
+            message:'userRole must be user or vendor'
+        }
     },
     isActive:{
         type:Boolean,
@@ -54,6 +58,18 @@ const userSchema = new mongoose.Schema({
     userToken:String,
     userTokenExpire:Date
 }, { collection: "user" });
+
+userSchema.pre('save',async function(next){
+    if(this.userConfirmPassword){
+    this.userConfirmPassword = undefined;
+    this.userPassword = await bcrypt.hash(this.userPassword,12);
+    }
+    next();
+})
+
+userSchema.methods.comparePassword = async function(userPassword,dbPassword){
+    return await bcrypt.compare(userPassword,dbPassword);
+}
 
 const user = mongoose.model("user", userSchema);
 module.exports = user;
