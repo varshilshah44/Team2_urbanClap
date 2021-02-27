@@ -3,8 +3,8 @@ const mongoose = require('../dbconnection');
 const serviceSchema = new mongoose.Schema({
     categoryId: {
         type: mongoose.Schema.ObjectId,
-        ref: 'category',
-        required: true
+        ref: 'category'
+        // ,required: true
     },
     serviceName: {
         type: String,
@@ -40,4 +40,5 @@ const serviceSchema = new mongoose.Schema({
     updatedAt: Date
 }, { collection: 'service' })
 
-exports.service = mongoose.model('service', serviceSchema);
+const service = mongoose.model('service', serviceSchema);
+module.exports = service;
