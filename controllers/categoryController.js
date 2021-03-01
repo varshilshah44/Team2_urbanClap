@@ -5,7 +5,6 @@ const service = require('../models/serviceModel');
 exports.checkAdmin = async (req,res,next)=>{        // This is ran before all other category routes as only admin has access to this rout
     try {        
         const user = await User.findOne({ userToken: req.headers.authorization});
-        console.log(user);
         if(user.userRole !== 'admin') throw new Error('Only Admin can access this page!');
         next();
     } catch (err) {
@@ -20,8 +19,7 @@ exports.addCategory = async (req, res, next) => {
     try {
         const data = await category.create(req.body);
         res.status(200).json({
-            status: 'Success',
-            data: data
+            status: 'Success'
         })
         next();
     } catch (err) {
@@ -46,8 +44,7 @@ exports.updateCategory = async (req, res, next) => {
             runValidators: true
         }).select('-_id -__v');
         res.status(200).json({
-            status: 'Success',
-            data: data
+            status: 'Success'
         })
         next();
     } catch (err) {
@@ -86,8 +83,7 @@ exports.delete = async (req, res, next) => {
         const services = await service.deleteMany({categoryId: req.params.id})
         const data = await category.findByIdAndDelete(req.params.id);
         res.status(200).json({
-            status: 'Success',
-            data: data
+            status: 'Success'
         })
         next();
     } catch (err) {

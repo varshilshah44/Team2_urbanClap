@@ -11,8 +11,8 @@ router.route('/:categoryId')
     .post(checkAdmin, serviceController.createService)
     .get(serviceController.getAllService);      // For Users to select the services
 router.route('/:serviceId')
-    .put(checkAdmin)        //TODO
-    .delete(checkAdmin);    //TODO
+    .put(checkAdmin,serviceController.updateService)        //TODO
+    .delete(checkAdmin, serviceController.deleteService);    //TODO
 router.route('/vendor/:serviceId')
     .get(serviceController.getVendors)
 
