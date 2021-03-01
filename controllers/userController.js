@@ -39,10 +39,25 @@ exports.login = async (req, res, next) => {
 
     const token = jwt.sign({ id: User._id }, process.env.JWT_KEY);    //generating token 
     User.userToken = token;                                           //add token and expiretoken details in collection
-    User.userTokenExpire = Date.now() + 5 * 60 * 1000;
+    User.userTokenExpire = Date.now() + 15 * 60 * 1000;
     await User.save({
       validateBeforeSave: false,
     });
+
+    //checking vendor belong to any service or not
+    if(User.userRole === "vendor"){
+       const services = await service.find({vendorId:User._id});
+       if(services.length === 0){
+       return res.status(201).json({
+          status: "success",
+          message:"you do not belong to any service so please enter the service first",
+          data: {
+            token: token,
+            userId: User._id,
+          },
+        });
+      }
+    }
 
     res.status(201).json({
       status: "success",

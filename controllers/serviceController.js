@@ -6,6 +6,9 @@ const {deleteUser} = require('./userController')
 exports.createService = async (req, res, next) => {
     try {
         req.body.categoryId = req.params.categoryId;
+        if(! await category.findById(req.params.categoryId)){
+            throw new Error("category does not exist");
+        }
         const data = await service.create(req.body);
         res.status(200).json({
             status: 'Success'

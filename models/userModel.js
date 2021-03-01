@@ -54,6 +54,10 @@ const userSchema = new mongoose.Schema({
         type:Date,
         default:Date.now()
     },
+    isBelongToService:{
+        type:Boolean,
+        default:true
+    },
     updatedAt:Date,
     userToken:String,
     userTokenExpire:Date
