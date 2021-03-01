@@ -3,9 +3,12 @@ const mongoose = require('../dbconnection');
 const categorySchema = new mongoose.Schema({
     categoryName: {
         type: String,
-        validate: [/[A-Za-z]/, 'Name should contain only letters'],
+        unique: true,
+        validate: [/^[A-Za-z]/, 'Name should contain only letters'],
         required: [true, 'Category Name is required']
     }
 }, { collection: 'category' })
 
-exports.category = mongoose.model('category', categorySchema);
+const category = mongoose.model('category', categorySchema);
+
+module.exports = category;

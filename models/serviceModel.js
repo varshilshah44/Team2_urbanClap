@@ -3,8 +3,8 @@ const mongoose = require('../dbconnection');
 const serviceSchema = new mongoose.Schema({
     categoryId: {
         type: mongoose.Schema.ObjectId,
-        ref: 'category',
-        required: true
+        ref: 'category'
+        // ,required: true
     },
     serviceName: {
         type: String,
@@ -42,14 +42,3 @@ const serviceSchema = new mongoose.Schema({
 
 const service = mongoose.model('service', serviceSchema);
 module.exports = service;
-/**
- * 2) services
-
-- categoryId :
-- serviceName : "Ac Re..",
-- servicePrice : 20
-- serviceDescription :
-####- serviceTime:######
-####- active: Boolean######
-- vendorId : array of vendorIds who provide this service , vendorId means userId
- */

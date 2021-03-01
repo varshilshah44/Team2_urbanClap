@@ -2,29 +2,29 @@ const mongoose = require('../dbconnection');
 const bcrypt = require('bcryptjs');
 
 const userSchema = new mongoose.Schema({
-    userName:{
-        type:String,
-        required:[true,'userName must be required'],
-        validate:[/^[a-zA-Z\s]+$/,'userName only contains alphabets and spaces']
+    userName: {
+        type: String,
+        required: [true, 'userName must be required'],
+        validate: [/^[a-zA-Z\s]+$/, 'userName only contains alphabets and spaces']
     },
-    userEmail:{
-        type:String,
-        required:[true,'userEmail must be required'],
-        validate:[/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/,'userEmail must be valid'],
-        unique:true
+    userEmail: {
+        type: String,
+        required: [true, 'userEmail must be required'],
+        validate: [/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/, 'userEmail must be valid'],
+        unique: true
     },
-    userPassword:{
-        type:String,
-        required:[true,'password must be required']
+    userPassword: {
+        type: String,
+        required: [true, 'password must be required']
     },
-    userConfirmPassword:{
-        type:String,
-        required:[true,'confirmPassword must be required'],
-        validate:{
-            validator:function(val){
-                return val===this.userPassword;
+    userConfirmPassword: {
+        type: String,
+        required: [true, 'confirmPassword must be required'],
+        validate: {
+            validator: function (val) {
+                return val === this.userPassword;
             },
-            message:'confirmPassword and password are different'
+            message: 'confirmPassword and password are different'
         }
     },
     userMobile:{
