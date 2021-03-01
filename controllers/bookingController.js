@@ -24,6 +24,7 @@ exports.updateBooking = async (req, res, next) => {
     "qty",
     "bookingStatus",
     "isCanceledBy",
+    "totalPrice"
   ];
   for (let i of Object.keys(req.body)) {        //removing extra fields from req.body
     if (!updateArr.includes(i)) {
@@ -37,6 +38,9 @@ exports.updateBooking = async (req, res, next) => {
       req.body,
       { new: true, runValidators: false }
     );
+    res.status(201).json({
+        status: "success",
+    });
   } catch (err) {
     return next(new appError(err.message, 500));
   }
@@ -44,6 +48,7 @@ exports.updateBooking = async (req, res, next) => {
 
 // adming can see all bookings and can see booking based on userid and also can see with bookingstatus
 exports.getBookings = async (req, res, next) => {
+  try{  
   if (req.user.userRole === "admin") {          // checking logged user is admin or not
     if (req.params.userid && req.params.bookingstatus) {    // if userid and bookingstatus both in params
       const obj = {
@@ -96,6 +101,10 @@ exports.getBookings = async (req, res, next) => {
     } else {
       return next(new appError("You are not logged in", 500));
     }
+  }
+  }
+  catch(err){
+      return next(new appError(err.message,500));
   }
 };
 

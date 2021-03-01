@@ -3,7 +3,6 @@ const mongoose = require("mongoose");
 const user = require("../models/userModel");
 const service = require("../models/serviceModel");
 const appError = require("../utils/appError");
-const { ObjectID } = require("bson");
 
 // this is for adding user/vendor details into the collection
 exports.signup = async (req, res, next) => {
@@ -40,7 +39,7 @@ exports.login = async (req, res, next) => {
 
     const token = jwt.sign({ id: User._id }, process.env.JWT_KEY);    //generating token 
     User.userToken = token;                                           //add token and expiretoken details in collection
-    User.userTokenExpire = Date.now() + 30 * 60 * 60 * 1000;
+    User.userTokenExpire = Date.now() + 5 * 60 * 1000;
     await User.save({
       validateBeforeSave: false,
     });
