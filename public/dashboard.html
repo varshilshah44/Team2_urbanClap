@@ -1,40 +1,89 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <title>React App</title>
 
-    <script
-      src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"
-      defer
-    ></script>
-    <script src="./javascripts/dashboard.js" defer></script>
+<head>
+  <meta charset="UTF-8" />
+  <title>React App</title>
 
-    <link
-      rel="stylesheet"
-      type="text/css"
-      href="./stylesheets/dashboard.css"
-      media="screen"
-    />
-  </head>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js" defer></script>
+  <script src="./javascripts/dashboard.js" defer></script>
 
-  <body>
-    <template id="template"> </template>
-    <div id="app">
-      <button type="button" id="cat">Get Category</button>
-      <button type="button" id="booking">Get All Bookings</button>
-      <button type="button" id="booking">Get Profile</button>
-      <button type="button" id="logout">Logout</button>
+  <link rel="stylesheet" type="text/css" href="./stylesheets/dashboard.css" media="screen" />
+  <!-- CSS only -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+</head>
+
+<body>
+  <template id="template"> </template>
+  <div id="app">
+    <button type="button" id="cat">Get Category</button>
+    <button type="button" id="booking">Get All Bookings</button>
+    <button type="button" id="profile">Get Profile</button>
+    <button type="button" id="logout">Logout</button>
+  </div>
+  <div id="profileDiv" hidden>
+    <div class="container">
+      <h1>Edit Profile</h1>
+      <hr>
+      <div class="row">
+
+        <!-- edit form column -->
+        <div class="col-md-9 personal-info">
+          <div id="alertDiv" class="alert alert-info alert-dismissable" hidden>
+            <i class="fa fa-coffee"></i>
+            <p id="alertMessage"></p>
+          </div>
+          <h3>Personal info</h3>
+
+          <form id="profileForm" class="form-horizontal" role="form">
+            <div class="form-group">
+              <label id="email" class="col-lg-3 control-label">Email:</label>
+            </div>
+            <div class="form-group">
+              <label class="col-lg-3 control-label">User Name:</label>
+              <div class="col-lg-8">
+                <input id="name" class="form-control" type="text">
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-md-3 control-label">Mobile:</label>
+              <div class="col-md-8">
+                <input id="mobile" class="form-control" type="text">
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-md-3 control-label">Address:</label>
+              <div class="col-md-8">
+                <input id="address" class="form-control" type="text">
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-md-3 control-label"></label>
+              <div class="col-md-8">
+                <input id="profileSubmitBtn" type="button" class="btn btn-primary" value="Save Changes">
+                <span></span>
+                <input type="reset" class="btn btn-default" value="Cancel">
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
     </div>
-    <div id="categoryData"></div>
-    <div id="serviceData">
-     <!--  <div class="card1">
+    <hr>
+  </div>
+  <div id="categoryData">
+
+  </div>
+  <div id="serviceData">
+    <!--  <div class="card1">
         <h1>John Doe</h1>
         <p>Harvard University</p>
         <p>price : 1000</p>
         <p>time : 5:30</p>
         <p><button>Vendors</button></p>
       </div> -->
-    </div>
-  </body>
+  </div>
+</body>
+
 </html>

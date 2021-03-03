@@ -45,12 +45,12 @@ exports.login = async (req, res, next) => {
     });
 
     //checking vendor belong to any service or not
-    if(User.userRole === "vendor"){
-       const services = await service.find({vendorId:User._id});
-       if(services.length === 0){
-       return res.status(201).json({
+    if (User.userRole === "vendor") {
+      const services = await service.find({ vendorId: User._id });
+      if (services.length === 0) {
+        return res.status(201).json({
           status: "success",
-          message:"you do not belong to any service so please enter the service first",
+          message: "you do not belong to any service so please enter the service first",
           data: {
             token: token,
             userId: User._id,
@@ -64,7 +64,7 @@ exports.login = async (req, res, next) => {
       data: {
         token: token,
         userId: User._id,
-        userRole:User.userRole
+        userRole: User.userRole
       },
     });
   } catch (err) {
@@ -94,7 +94,7 @@ exports.permission = async (req, res, next) => {
 
 // using access control because adming can see getAllusers and user can not see getAllusers
 exports.getUsers = async (req, res, next) => {
-  if (req.user.userRole === "admin") {      
+  if (req.user.userRole === "admin") {
     if (!req.params.userid) {     //admin can get all users
       const users = await user
         .find({ userRole: { $ne: "admin" } })
@@ -117,7 +117,7 @@ exports.getUsers = async (req, res, next) => {
       });
     }
   } else {      // this else block for user/vendor
-    if (req.params.userid) {       
+    if (req.params.userid) {
       if (req.params.userid == req.user._id) {      //verify that user can only request for his/her details only 
         const User = await user
           .findById(req.params.userid)      //user details by userid
@@ -199,7 +199,7 @@ exports.addVendorIntoService = async (req, res, next) => {
   if (!req.params.serviceid) {
     return next(new appError("Please provide the serviceId", 500));
   }
-  if (req.user.userRole === "vendor") {     
+  if (req.user.userRole === "vendor") {
     await service.findByIdAndUpdate(      //adding vendorid into service 
       req.params.serviceid,
       { $push: { vendorId: req.user._id } },
