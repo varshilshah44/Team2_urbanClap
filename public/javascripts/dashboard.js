@@ -68,6 +68,11 @@ const profileUpdate = async (id, tkn, name, mobile, addr, email) => {
 
 ////////////EVENT LISTNERS
 category.addEventListener("click", async () => {
+  serviceData.innerHTML = '';
+  categorydata.innerHTML = '';
+  profDiv.hidden = true;
+  serviceData.hidden = false;
+  categorydata.hidden = false;
   const res = await axios.get("http://localhost:3000/api/category/", {
     headers: {
       Authorization: tkn,
@@ -94,6 +99,8 @@ category.addEventListener("click", async () => {
 profile.addEventListener('click', async () => {
   profDiv.hidden = false;
   alertDiv.hidden = true;
+  categorydata.hidden = true;
+  serviceData.hidden = true;
   console.log(uid)
   const data = await axios.get(`http://localhost:3000/api/user/${uid}`, {
     headers: {
