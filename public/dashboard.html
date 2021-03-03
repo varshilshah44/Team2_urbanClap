@@ -28,23 +28,91 @@
     <template id="template"> </template>
     <div id="app">
       <button type="button" id="cat">Get Category</button>
-      <button type="button" id="booking">Get All Bookings</button>
-      <button type="button" id="booking">Get Profile</button>
+      <button type="button" id="getBooking">Get All Bookings</button>
+      <button type="button" id="profile">Get Profile</button>
       <button type="button" id="logout">Logout</button>
     </div>
+    <div id="profileDiv" hidden>
+      <div class="container">
+        <h1>Edit Profile</h1>
+        <hr />
+        <div class="row">
+          <!-- edit form column -->
+          <div class="col-md-9 personal-info">
+            <div
+              id="alertDiv"
+              class="alert alert-info alert-dismissable"
+              hidden
+            >
+              <i class="fa fa-coffee"></i>
+              <p id="alertMessage"></p>
+            </div>
+            <h3>Personal info</h3>
+
+            <form id="profileForm" class="form-horizontal" role="form">
+              <div class="form-group">
+                <label id="email" class="col-lg-3 control-label">Email:</label>
+              </div>
+              <div class="form-group">
+                <label class="col-lg-3 control-label">User Name:</label>
+                <div class="col-lg-8">
+                  <input id="name" class="form-control" type="text" />
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-md-3 control-label">Mobile:</label>
+                <div class="col-md-8">
+                  <input id="mobile" class="form-control" type="text" />
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-md-3 control-label">Address:</label>
+                <div class="col-md-8">
+                  <input id="address" class="form-control" type="text" />
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-md-3 control-label"></label>
+                <div class="col-md-8">
+                  <input
+                    id="profileSubmitBtn"
+                    type="button"
+                    class="btn btn-primary"
+                    value="Save Changes"
+                  />
+                  <span></span>
+                  <input type="reset" class="btn btn-default" value="Cancel" />
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+      <hr />
+    </div>
+    <div id="bookDiv" hidden>
+      
+    </div>
+
     <div id="categoryData"></div>
     <div id="serviceData"></div>
     <div id="vendorData"></div>
-    <div id="book" style="display:none; margin-top:630px;">
-      <form id="bookform" style="margin-left:35%; height:600px; margin-top:40px;">
-        <p style="font-size:30px; margin-left:70px; color:lightslategray;">Booking</p>
+
+    <div id="book" style="display: none; margin-top: 630px">
+      <form
+        id="bookform"
+        style="margin-left: 35%; height: 600px; margin-top: 40px"
+      >
+        <p style="font-size: 30px; margin-left: 70px; color: lightslategray">
+          Booking
+        </p>
         <div class="form-group">
           <label for="exampleInputEmail1">Booking Date</label>
           <input
             type="date"
             class="form-control"
             aria-describedby="emailHelp"
-            style="width:300px;"
+            style="width: 300px"
             id="date"
           />
         </div>
@@ -53,7 +121,7 @@
           <input
             type="time"
             class="form-control"
-            style="width:300px;"
+            style="width: 300px"
             id="time"
           />
         </div>
@@ -62,7 +130,7 @@
           <input
             type="number"
             class="form-control"
-            style="width:300px;"
+            style="width: 300px"
             id="qty"
           />
         </div>
@@ -71,12 +139,19 @@
           <input
             type="text"
             class="form-control"
-            style="width:300px;"
+            style="width: 300px"
             id="vendorname"
             readonly
           />
         </div>
-        <button id="bookingbtn" style="margin-left:15%;" type="submit" class="btn btn-primary">Book</button>
+        <button
+          id="bookingbtn"
+          style="margin-left: 15%"
+          type="submit"
+          class="btn btn-primary"
+        >
+          Book
+        </button>
       </form>
     </div>
   </body>
