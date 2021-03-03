@@ -74,10 +74,10 @@ exports.getVendors = async (req, res, next) => {
         console.log("VENDOR!!")
         const data =
         await service.findById(req.params.serviceId, 'vendorId')
-        .select('-_id').populate('vendorId', 'userName -_id');
+        .select('-_id').populate('vendorId', 'userName userMobile userAddress _id');
         res.status(200).json({
             status: 'Success',
-            data
+            vendors:data.vendorId
         })
         next();
     } catch (err) {

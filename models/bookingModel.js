@@ -22,8 +22,7 @@ const bookingSchema = new mongoose.Schema({
     },
     bookingTime:{
         type:String,
-        required:[true,'bookingDate is required'],
-        validate:[/([0-9]|0[0-9]|1[0-9]|2[0-3]):([0-5][0-9])\s*([AaPp][Mm])/,'bookingTime must be valid']
+        required:[true,'bookingTime is required'],
     },
     qty:{
         type:Number,

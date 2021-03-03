@@ -16,6 +16,12 @@
       href="./stylesheets/dashboard.css"
       media="screen"
     />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+      integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+      crossorigin="anonymous"
+    />
   </head>
 
   <body>
@@ -27,14 +33,51 @@
       <button type="button" id="logout">Logout</button>
     </div>
     <div id="categoryData"></div>
-    <div id="serviceData">
-     <!--  <div class="card1">
-        <h1>John Doe</h1>
-        <p>Harvard University</p>
-        <p>price : 1000</p>
-        <p>time : 5:30</p>
-        <p><button>Vendors</button></p>
-      </div> -->
+    <div id="serviceData"></div>
+    <div id="vendorData"></div>
+    <div id="book" style="display:none; margin-top:630px;">
+      <form id="bookform" style="margin-left:35%; height:600px; margin-top:40px;">
+        <p style="font-size:30px; margin-left:70px; color:lightslategray;">Booking</p>
+        <div class="form-group">
+          <label for="exampleInputEmail1">Booking Date</label>
+          <input
+            type="date"
+            class="form-control"
+            aria-describedby="emailHelp"
+            style="width:300px;"
+            id="date"
+          />
+        </div>
+        <div class="form-group">
+          <label for="exampleInputPassword1">bookingTime</label>
+          <input
+            type="time"
+            class="form-control"
+            style="width:300px;"
+            id="time"
+          />
+        </div>
+        <div class="form-group">
+          <label for="exampleInputPassword1">serviceQty</label>
+          <input
+            type="number"
+            class="form-control"
+            style="width:300px;"
+            id="qty"
+          />
+        </div>
+        <div class="form-group">
+          <label for="exampleInputPassword1">vendorName</label>
+          <input
+            type="text"
+            class="form-control"
+            style="width:300px;"
+            id="vendorname"
+            readonly
+          />
+        </div>
+        <button id="bookingbtn" style="margin-left:15%;" type="submit" class="btn btn-primary">Book</button>
+      </form>
     </div>
   </body>
 </html>

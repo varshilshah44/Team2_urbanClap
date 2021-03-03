@@ -39,7 +39,7 @@ exports.login = async (req, res, next) => {
 
     const token = jwt.sign({ id: User._id }, process.env.JWT_KEY);    //generating token 
     User.userToken = token;                                           //add token and expiretoken details in collection
-    User.userTokenExpire = Date.now() + 60 * 60 * 1000;
+    User.userTokenExpire = Date.now() + (5 * 60 * 60 * 1000);
     await User.save({
       validateBeforeSave: false,
     });
