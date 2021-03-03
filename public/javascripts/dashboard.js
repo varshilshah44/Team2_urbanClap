@@ -70,6 +70,7 @@ const profileUpdate = async (id, tkn, name, mobile, addr, email) => {
 category.addEventListener("click", async () => {
   serviceData.innerHTML = '';
   categorydata.innerHTML = '';
+  vendorData.innerHTML = '';
   profDiv.hidden = true;
   serviceData.hidden = false;
   categorydata.hidden = false;
