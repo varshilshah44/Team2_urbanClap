@@ -1,17 +1,17 @@
-const bookingController = require("../controllers/bookingController");
-const userController = require("../controllers/userController");
+const {updateBooking,getBookings,addBooking} = require("../controllers/bookingController");
+const {permission} = require("../middleware/auth");
 const express = require("express");
 const router = express.Router();
 
-router.post("/", userController.permission, bookingController.addBooking);
+router.post("/", permission,addBooking);
 router.put(
   "/:bookingid",
-  userController.permission,
-  bookingController.updateBooking
+  permission,
+  updateBooking
 );
 router.get(
   "/:userid?/:bookingstatus?",
-  userController.permission,
-  bookingController.getBookings
+  permission,
+  getBookings
 );
 module.exports = router;

@@ -94,6 +94,7 @@ async function getVendors(serviceid, servicePrice) {
           </div>
         </div>`;
       node.content.querySelector("button").addEventListener("click", () => {
+        book.hidden = false;
         booking(el._id, el.userName, serviceid, servicePrice);
       });
       vendorData.append(node.content);
@@ -125,6 +126,7 @@ async function getServices(id) {
           <p><button>Vendors</button></p>
         </div>`;
       node.content.querySelector("button").addEventListener("click", () => {
+        vendorData.hidden = false;
         getVendors(el._id, el.servicePrice);
       });
       serviceData.append(node.content);
@@ -275,9 +277,7 @@ getBooking.addEventListener("click",  () => {
   serviceData.hidden = true;
   vendorData.hidden = true;
   book.hidden = true;
-  bookDiv.hidden = false;
- 
-  
+  bookDiv.hidden = false; 
   getBookings();
 });
 

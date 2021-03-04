@@ -3,18 +3,18 @@ const express = require('express');
 
 const router = express.Router();
 
-const serviceController = require('../controllers/serviceController');
-const { checkAdmin } = require('../controllers/categoryController');
-const { permission } = require('../controllers/userController')
+const {createService,getAllService,updateService,deleteService,getVendors} = require('../controllers/serviceController');
+const {checkAdmin} = require("../middleware/checkAdmin");
+const {permission} = require("../middleware/auth");
 
 router.route('/:categoryId')
-    .post(checkAdmin, serviceController.createService)
-    .get(serviceController.getAllService);      // For Users to select the services
+    .post(permission,checkAdmin,createService)
+    .get(permission,getAllService);      // For Users to select the services
 router.route('/:serviceId')
-    .put(checkAdmin,serviceController.updateService)        //TODO
-    .delete(checkAdmin, serviceController.deleteService);    //TODO
+    .put(permission,checkAdmin,updateService)        //TODO
+    .delete(permission,checkAdmin,deleteService);    //TODO
 router.route('/vendor/:serviceId')
-    .get(serviceController.getVendors)
+    .get(permission,getVendors)
 
 
 module.exports = router;
