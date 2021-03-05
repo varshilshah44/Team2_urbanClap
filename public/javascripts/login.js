@@ -7,7 +7,7 @@ const form = document.getElementById("form");
 console.log(window.location.href)
 
 async function login() {
-    const res = await axios.put(`${window.location.href}api/user/login`, {
+    const res = await axios.put(`${window.location.href}/api/user/login`, {
         userEmail: email.value,
         userPassword: password.value
     })
