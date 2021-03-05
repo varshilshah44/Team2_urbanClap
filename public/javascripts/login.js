@@ -4,10 +4,14 @@ const password = document.getElementById("password");
 const errormessage = document.getElementById("errormessage")
 const form = document.getElementById("form");
 
-console.log(window.location.href)
 
+/* if(window.location.href.lastIndexOf('/') === window.location.href.length-1){ 
+    window.location.href = window.location.href.substring(0,window.location.href.length-1);
+}
+  */
+console.log(window.location.href)
 async function login() {
-    const res = await axios.put(`${window.location.href}/api/user/login`, {
+    const res = await axios.put(`${window.location.href}api/user/login`, {
         userEmail: email.value,
         userPassword: password.value
     })
