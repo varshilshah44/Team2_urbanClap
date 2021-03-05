@@ -1,4 +1,5 @@
 const mongoose = require('../dbconnection');
+const {defaultSchema} = require('../common/defaultSchema')
 
 const bookingSchema = new mongoose.Schema({
     serviceId:{
@@ -44,14 +45,8 @@ const bookingSchema = new mongoose.Schema({
         type:String,
         enum:['user','vendor']
     },
-    createdAt:{
-        type:Date,
-        default:Date.now()
-    },
-    updatedAt:{
-        type:Date,
-    },
 },{collection:'booking'})
 
+bookingSchema.plugin(defaultSchema)
 const booking = mongoose.model('booking',bookingSchema);
 module.exports = booking;

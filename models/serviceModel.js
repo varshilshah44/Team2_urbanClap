@@ -1,5 +1,5 @@
 const mongoose = require('../dbconnection');
-
+const {defaultSchema} = require('../common/defaultSchema')
 const serviceSchema = new mongoose.Schema({
     categoryId: {
         type: mongoose.Schema.ObjectId,
@@ -33,12 +33,8 @@ const serviceSchema = new mongoose.Schema({
             ref: 'user'
         }
     ],
-    createdAt: {
-        type: Date,
-        default: Date.now()
-    },
-    updatedAt: Date
 }, { collection: 'service' })
 
+serviceSchema.plugin(defaultSchema)
 const service = mongoose.model('service', serviceSchema);
 module.exports = service;

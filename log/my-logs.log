@@ -1,0 +1,47 @@
+{"message":"connected","level":"info"}
+{"message":"connected","level":"info"}
+{"message":"connected","level":"info"}
+{"message":"connected","level":"info"}
+{"message":"connected","level":"info"}
+{"message":"connected","level":"info"}
+{"message":"connected","level":"info"}
+{"message":"connected","level":"info"}
+{"message":"connected","level":"info"}
+{"message":"connected","level":"warn"}
+{"message":"connected","level":"info"}
+[34minfo[39m:    connected
+[34minfo[39m:    connected
+[34minfo[39m:    connected
+{"message":"connected","level":"info"}
+{"message":"connected","level":"info"}
+{"message":"connected","level":"info"}
+{"message":"connected","level":"info"}
+{"message":"connected","level":"info"}
+2021-03-05T07:17:24.343Z info: connected
+2021-03-05T07:18:39.482Z info: connected
+{2021-03-05T07:19:07.175Z info: connected}
+{"message":connected,"level":info,"timestamp":2021-03-05T07:20:21.606Z}
+{"message":connected,"level":info,"timestamp":undefined}
+{"message":connected,"level":info,"timestamp":2021-03-05T07:21:17.558Z}
+{"message":connected,"level":info,"timestamp":2021-03-05T09:39:02.737Z}
+{"message":connected,"level":info,"timestamp":2021-03-05T10:07:37.097Z}
+{"message":connected,"level":info,"timestamp":2021-03-05T10:08:29.916Z}
+{"message":connected,"level":info,"timestamp":2021-03-05T10:09:31.538Z}
+{"message":connected,"level":info,"timestamp":2021-03-05T10:11:34.865Z}
+{"message":connected,"level":info,"timestamp":2021-03-05T12:20:57.721Z}
+{"message":connected,"level":info,"timestamp":2021-03-05T12:21:50.537Z}
+{"message":connected,"level":info,"timestamp":2021-03-05T12:22:27.390Z}
+{"message":connected,"level":info,"timestamp":2021-03-05T12:24:23.757Z}
+{"message":connected,"level":info,"timestamp":2021-03-05T12:24:39.813Z}
+{"message":connected,"level":info,"timestamp":2021-03-05T12:25:32.805Z}
+{"message":connected,"level":info,"timestamp":2021-03-05T12:25:57.232Z}
+{"message":connected,"level":info,"timestamp":2021-03-05T12:27:07.924Z}
+{"message":connected,"level":info,"timestamp":2021-03-05T12:27:24.050Z}
+{"message":connected,"level":info,"timestamp":2021-03-05T12:39:52.470Z}
+{"message":connected,"level":info,"timestamp":2021-03-05T12:40:18.558Z}
+{"message":connected,"level":info,"timestamp":2021-03-05T12:40:34.559Z}
+{"message":connected,"level":info,"timestamp":2021-03-05T12:41:06.577Z}
+{"message":connected,"level":info,"timestamp":2021-03-05T12:42:10.135Z}
+{"message":connected,"level":info,"timestamp":2021-03-05T12:44:49.165Z}
+{"message":connected,"level":info,"timestamp":2021-03-05T12:45:08.694Z}
+{"message":connected,"level":info,"timestamp":2021-03-05T12:45:25.566Z}
