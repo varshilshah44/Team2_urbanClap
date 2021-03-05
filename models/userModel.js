@@ -4,8 +4,14 @@ const bcrypt = require('bcryptjs');
 const userSchema = new mongoose.Schema({
     userName: {
         type: String,
+        set:function(name){
+            return name.toLowerCase()
+        },
+        get:function(name){
+            return name.toUpperCase()
+        },
         required: [true, 'userName must be required'],
-        validate: [/^[a-zA-Z\s]+$/, 'userName only contains alphabets and spaces']
+        validate: [/^[a-zA-Z\s]+$/, 'userName only contains alphabets and spaces'],
     },
     userEmail: {
         type: String,
@@ -57,7 +63,7 @@ const userSchema = new mongoose.Schema({
     updatedAt:Date,
     userToken:String,
     userTokenExpire:Date
-}, { collection: "user" });
+}, { collection: "user"});
 
 userSchema.pre('save',async function(next){
     if(this.userConfirmPassword){
