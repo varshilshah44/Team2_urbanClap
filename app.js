@@ -29,7 +29,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('', indexRouter);
 app.use('/users', usersRouter);
 
-app.use('/api/user',userRouter);
+app.use(`/api/user`,userRouter);
 app.use('/api/vendor',userRouter);
 app.use('/api/booking',bookingRouter);
 app.use('/api/category',categoryRouter);
