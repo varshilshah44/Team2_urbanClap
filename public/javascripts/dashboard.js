@@ -163,6 +163,7 @@ category.addEventListener("click", async () => {
   bookDiv.hidden = true;
   serviceData.hidden = false;
   categorydata.hidden = false;
+  console.log(window.location.href)
   const res = await axios.get(`${window.location.href}/api/category/`, {
     headers: {
       Authorization: tkn,
