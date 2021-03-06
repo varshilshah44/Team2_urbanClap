@@ -28,7 +28,7 @@ const template = document.getElementById("template");
 let serviceid;
 let vendorid;
 
-console.log(window.location)
+console.log(window.location.origin)
 function booking(vendorid, userName, serviceid, servicePrice) {
   serviceid = serviceid;
   vendorid = vendorid;

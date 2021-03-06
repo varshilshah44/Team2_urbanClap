@@ -4,6 +4,8 @@ const password = document.getElementById("password");
 const errormessage = document.getElementById("errormessage")
 const form = document.getElementById("form");
  
+
+console.log(window.location.origin)
 async function login() {
     const res = await axios.put(`${window.location.href}api/user/login`, {
         userEmail: email.value,
