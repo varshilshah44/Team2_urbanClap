@@ -27,6 +27,8 @@ const uid = localStorage.getItem("userid");
 const template = document.getElementById("template");
 let serviceid;
 let vendorid;
+
+console.log(window.location)
 function booking(vendorid, userName, serviceid, servicePrice) {
   serviceid = serviceid;
   vendorid = vendorid;
