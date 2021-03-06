@@ -28,7 +28,7 @@ const template = document.getElementById("template");
 let serviceid;
 let vendorid;
 
-console.log(window.location.origin)
+
 function booking(vendorid, userName, serviceid, servicePrice) {
   serviceid = serviceid;
   vendorid = vendorid;
@@ -166,7 +166,7 @@ category.addEventListener("click", async () => {
   serviceData.hidden = false;
   categorydata.hidden = false;
   console.log(window.location.href)
-  const res = await axios.get(`${window.location.href}/api/category/`, {
+  const res = await axios.get(`${window.location.origin}/api/category/`, {
     headers: {
       Authorization: tkn,
     },

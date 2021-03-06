@@ -5,9 +5,8 @@ const errormessage = document.getElementById("errormessage")
 const form = document.getElementById("form");
  
 
-console.log(window.location.origin)
 async function login() {
-    const res = await axios.put(`${window.location.href}api/user/login`, {
+    const res = await axios.put(`${window.location.origin}/api/user/login`, {
         userEmail: email.value,
         userPassword: password.value
     })
