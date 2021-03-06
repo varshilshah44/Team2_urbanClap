@@ -3,14 +3,7 @@ const email = document.getElementById("email");
 const password = document.getElementById("password");
 const errormessage = document.getElementById("errormessage")
 const form = document.getElementById("form");
-let y;
-
-
-if(window.location.href.lastIndexOf('/') === window.location.href.length-1){ 
-    y = window.location.href.substring(0,window.location.href.length-1);
-}
-window.location.href = y
-console.log(window.location.href)   
+ 
 async function login() {
     const res = await axios.put(`${window.location.href}api/user/login`, {
         userEmail: email.value,
