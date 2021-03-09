@@ -27,6 +27,8 @@ const uid = localStorage.getItem("userid");
 const template = document.getElementById("template");
 let serviceid;
 let vendorid;
+
+
 function booking(vendorid, userName, serviceid, servicePrice) {
   serviceid = serviceid;
   vendorid = vendorid;
@@ -38,7 +40,7 @@ function booking(vendorid, userName, serviceid, servicePrice) {
     const time = document.querySelector("#time").value;
     const qty = document.querySelector("#qty").value;
     const res = await axios.post(
-      `${window.location.href}/api/booking`,
+      `${window.location.origin}/api/booking`,
       {
         serviceId: serviceid,
         vendorId: vendorid,
@@ -68,7 +70,7 @@ function booking(vendorid, userName, serviceid, servicePrice) {
 
 async function getVendors(serviceid, servicePrice) {
   const res = await axios.get(
-    `${window.location.href}/api/service/vendor/${serviceid}`,
+    `${window.location.origin}/api/service/vendor/${serviceid}`,
     {
       headers: {
         Authorization: tkn,
@@ -108,7 +110,7 @@ async function getVendors(serviceid, servicePrice) {
 
 //////////////FUNCTIONS
 async function getServices(id) {
-  const res = await axios.get(`${window.location.href}/api/service/${id}`, {
+  const res = await axios.get(`${window.location.origin}/api/service/${id}`, {
     headers: {
       Authorization: tkn,
     },
@@ -137,7 +139,7 @@ async function getServices(id) {
 
 const profileUpdate = async (id, tkn, name, mobile, addr, email) => {
   const updateData = await axios.put(
-    `${window.location.href}/api/user/${id}`,
+    `${window.location.origin}/api/user/${id}`,
     {
       userName: name,
       userMobile: mobile,
@@ -163,8 +165,8 @@ category.addEventListener("click", async () => {
   bookDiv.hidden = true;
   serviceData.hidden = false;
   categorydata.hidden = false;
-  console.log(window.location.href)
-  const res = await axios.get(`${window.location.href}/api/category/`, {
+
+  const res = await axios.get(`${window.location.origin}/api/category/`, {
     headers: {
       Authorization: tkn,
     },
@@ -197,7 +199,7 @@ profile.addEventListener("click", async () => {
   book.hidden = true;
   bookDiv.hidden = true;
   //console.log(uid)
-  const data = await axios.get(`${window.location.href}/api/user/${uid}`, {
+  const data = await axios.get(`${window.location.origin}/api/user/${uid}`, {
     headers: {
       Authorization: tkn,
     },
@@ -229,7 +231,7 @@ profile.addEventListener("click", async () => {
 });
 
 async function getBookings(){
-  const res = await axios.get(`${window.location.href}/api/booking/${userid}`, {
+  const res = await axios.get(`${window.location.origin}/api/booking/${userid}`, {
     headers: {
       Authorization: tkn,
     },
