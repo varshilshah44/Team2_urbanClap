@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script
+      src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"
+      defer
+    ></script>
+    <script src="./javascripts/admin.js" defer></script>
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="./stylesheets/dashboard.css"
+      media="screen"
+    />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+      integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+      crossorigin="anonymous"
+    />
+  </head>
+  <body>
+    <div id="app">
+      <button onclick="category()" type="button" id="cat">Get Category</button>
+      <button onclick="users()" type="button" id="getBooking">
+        Get All Users
+      </button>
+      <button type="button" id="profile">Get Profile</button>
+      <button onclick="logout()" type="button" id="logout">Logout</button>
+    </div>
+    <div>
+      <% if(data.categories) { %>
+      <button onclick="addnewcategory()" style="margin-top: 50px">
+        Add new Category
+      </button>
+      <% data.categories.forEach(el => { %>
+      <div class="card" onclick="onSelectCategory('<%= el._id %>')">
+        <h3><%= el.categoryName %></h3>
+      </div>
+      <% }) %> <%}%>
+    </div>
+    <div style="margin-top: 40px; display: none" id="addcategory">
+      <h3 style="text-align: center">Add Category</h3>
+      <label style="margin-left: 40%"
+        >Name : <input type="text" id="categoryName"
+      /></label>
+      <button onclick="onaddcategory()">Add</button>
+    </div>
+
+    <div id="displayservices">
+      <% if(data.services) { %>
+      <button onclick="addservice()" style="float: left; margin-top: 30px">
+        Add new Service
+      </button>
+      <% data.services.forEach(el => { %>
+      <div
+        style="float: left; margin-top: 70px; margin-left: 30px"
+        class="card1"
+      >
+        <h1><%= el.serviceName %></h1>
+        <p><%= el.serviceDescription %></p>
+        <p>price : <%= el.servicePrice %></p>
+        <p>time : <%= el.serviceTime %></p>
+        <p>
+          <button onclick="onselectVendor('<%= el._id %>')">Vendors</button>
+        </p>
+      </div>
+      <% }) %> <% } %>
+    </div>
+
+    <div style="margin-top: 300px; display: none" id="addservice">
+      <h3 style="text-align: center">Add Service</h3>
+      <label style="margin-left: 40%"
+        >Name : <input type="text" id="servicename"
+      /></label>
+      <label style="margin-left: 40%"
+        >Price : <input type="number" id="serviceprice"
+      /></label>
+      <label style="margin-left: 40%"
+        >serviceDescription : <input type="text" id="servicedescription"
+      /></label>
+      <label style="margin-left: 40%"
+        >serviceTime : <input type="time" id="servicetime"
+      /></label>
+      <button onclick="onaddservice('<%= data.categoryid %>')">
+        Add service
+      </button>
+    </div>
+
+    <div id="displayvendors">
+      <% if(data.vendors) { %> <% data.vendors.forEach(el => { %>
+      <div style="margin-top: 50px; margin-left: 30px" class="vendorcard">
+        <img
+          src="./images/user.png"
+          alt="Avatar"
+          style="width: 40%; margin-left: 30%"
+        />
+        <div class="container">
+          <h4 style="text-align: center"><b><%=el.userName%></b></h4>
+          <p style="text-align: center"><%=el.userMobile%></p>
+          <p style="text-align: center"><%=el.userAddress%></p>
+        </div>
+      </div>
+      <% })} %>
+    </div>
+
+    <div id="displayusers">
+      <% if(data.users) { %> 
+        <table id="customers" style="margin-top:50px;">
+          <tr>
+            <th>userName</th>
+            <th>userMobile</th>
+            <th>userEmail</th>
+            <th>userAddress</th> 
+            <th>userRole</th>
+            <th>isActive</th>
+            <th>Block</th>
+          </tr> 
+      <% data.users.forEach(el => { %>
+        <tr>
+          <td><%= el.userName %></td>
+          <td><%= el.userMobile %></td>
+          <td><%= el.userEmail %></td>
+          <td><%= el.userAddress %></td>
+          <td><%= el.userRole %></td>
+          <td><%= el.isActive %></td>
+          <td><button>Block/Unblock</button></td>
+        </tr>
+      <% })} %>
+        </table>
+    </div>
+
+
+  </body>
+</html>

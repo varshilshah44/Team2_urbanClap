@@ -15,9 +15,9 @@ const serviceRouter = require('./routes/serviceRoute');
 var app = express();
 
 // view engine setup
-app.engine('html', cons.swig)
+//app.engine('html', cons.swig)
 app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'html');
+app.set('view engine', 'ejs');
 app.use(logger('dev'));
 app.use(cors())
 //app.use(helmet())
@@ -25,15 +25,17 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'views')));
+
 
 app.use('', indexRouter);
 app.use('/users', usersRouter);
 
-app.use(`/api/user`,userRouter);
+ app.use(`/api/user`,userRouter);
 app.use('/api/vendor',userRouter);
 app.use('/api/booking',bookingRouter);
 app.use('/api/category',categoryRouter);
-app.use('/api/service',serviceRouter);
+app.use('/api/service',serviceRouter); 
 // catch 404 and forward to error handler
 
 app.use((err,req,res,next) => {

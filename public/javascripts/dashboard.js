@@ -174,7 +174,7 @@ category.addEventListener("click", async () => {
   if (res.data.status === "Success") {
     const node = template.cloneNode(true);
     res.data.data.forEach((el) => {
-      node.innerHTML = ` <div class="card"s>
+      node.innerHTML = ` <div class="card">
             <h3>${el.categoryName}</h3>
         </div> `;
       node.content.querySelector("div").addEventListener("click", () => {
@@ -286,5 +286,5 @@ getBooking.addEventListener("click",  () => {
 logout.addEventListener("click", () => {
   localStorage.removeItem("token");
   localStorage.removeItem("userid");
-  location.href = "../index.html";
+  location.href = "/";
 });

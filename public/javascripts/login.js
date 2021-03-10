@@ -12,11 +12,14 @@ async function login() {
     })
     errormessage.textContent = res.data.message
     if (res.data.status === "success") {
+        alert("Login Successfully");
+        localStorage.setItem('token', res.data.data.token);
+        localStorage.setItem('userid', res.data.data.userId);
         if (res.data.data.userRole === "user") {
-            alert("Login Successfully");
-            localStorage.setItem('token', res.data.data.token);
-            localStorage.setItem('userid', res.data.data.userId);
-            location.href = "../dashboard.html"
+            location.href = "/dashboard"
+        }
+        else if(res.data.data.userRole === "admin"){
+            location.href = "/admindashboard"
         }
         else {
             alert("you are not user")
