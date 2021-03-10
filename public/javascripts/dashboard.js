@@ -1,6 +1,16 @@
+
+
+//BUTTON DECLARATION
 const category = document.getElementById("cat");
+const createCategory = document.getElementById('createCat');
+const getUsers = document.getElementById('getUsers');
+const createService = document.getElementById('service');
 const logout = document.getElementById("logout");
 const profile = document.getElementById("profile");
+const getUser = document.getElementById('getUsers');
+const getBooking = document.getElementById("getBooking");
+const getAllBooking = document.getElementById('getAllBooking');
+///
 
 const categorydata = document.getElementById("categoryData");
 const serviceData = document.getElementById("serviceData");
@@ -8,7 +18,6 @@ const vendorData = document.getElementById("vendorData");
 const book = document.getElementById("book");
 const addbooking = document.getElementById("bookingbtn");
 const bookform = document.getElementById("bookform");
-const getBooking = document.getElementById("getBooking");
 
 const alertDiv = document.getElementById("alertDiv");
 const alertMsg = document.getElementById("alertMessage");
@@ -78,12 +87,19 @@ async function getVendors(serviceid, servicePrice) {
     }
   );
   if (res.data.status === "Success") {
-    vendorData.innerHTML = "";
-    res.data.vendors.forEach((el) => {
-      const node = template.cloneNode(true);
-      node.innerHTML = `<div class="vendorcard">
+    addVendorsDiv(res)
+  } else {
+    alert(res.data.message);
+  }
+}
+
+const addVendorsDiv = (res) => {
+  vendorData.innerHTML = "";
+  res.data.vendors.forEach((el) => {
+    const node = template.cloneNode(true);
+    node.innerHTML = `<div class="vendorcard">
           <img
-            src="./images/user.png"
+            src="../public/images/user.png"
             alt="Avatar"
             style="width: 40%; margin-left: 30%"
           />
@@ -94,15 +110,12 @@ async function getVendors(serviceid, servicePrice) {
             <p style="text-align:center;"><button>Choose</button></p>
           </div>
         </div>`;
-      node.content.querySelector("button").addEventListener("click", () => {
-        book.hidden = false;
-        booking(el._id, el.userName, serviceid, servicePrice);
-      });
-      vendorData.append(node.content);
+    node.content.querySelector("button").addEventListener("click", () => {
+      book.hidden = false;
+      booking(el._id, el.userName, this.serviceid, this.servicePrice);
     });
-  } else {
-    alert(res.data.message);
-  }
+    vendorData.append(node.content);
+  });
 }
 
 //PRofile FOrm
@@ -116,25 +129,47 @@ async function getServices(id) {
     },
   });
   if (res.data.status === "Success") {
-    serviceData.innerHTML = "";
-    const node = template.cloneNode(true);
-    res.data.data.forEach((el) => {
-      node.innerHTML = `<div style="float:left;" class="card1">
-          <h1>${el.serviceName}</h1>
-          <p>${el.serviceDescription}</p>
-          <p>price : ${el.servicePrice}</p>
-          <p>time : ${el.serviceTime}</p>
-          <p><button>Vendors</button></p>
-        </div>`;
-      node.content.querySelector("button").addEventListener("click", () => {
-        vendorData.hidden = false;
-        getVendors(el._id, el.servicePrice);
-      });
-      serviceData.append(node.content);
-    });
+    addServiceDiv(res)
   } else {
     console.log(res.data.message);
   }
+}
+
+const newCategory = async () => {
+  console.log('CREATE CAT!!')
+  const node = template.cloneNode(true);
+  node.innerHTML = `     
+  <input id="newCategory" class="form-control" type="text" />
+  `;
+  categorydata.append(node.content);
+  const catName = document.getElementById('newCategory');
+  const res = await axios.put(`${window.location.origin}/api/category`,{
+    categoryName: catName.value
+  },{
+    headers: {
+      Authorization: tkn,
+    }
+  })
+  console.log(res.data);
+}
+
+const addServiceDiv = (res) => {
+  serviceData.innerHTML = "";
+  const node = template.cloneNode(true);
+  res.data.data.forEach((el) => {
+    node.innerHTML = `<div style="float:left;" class="card1">
+        <h1>${el.serviceName}</h1>
+        <p>${el.serviceDescription}</p>
+        <p>price : ${el.servicePrice}</p>
+        <p>time : ${el.serviceTime}</p>
+        <p><button>Vendors</button></p>
+      </div>`;
+    node.content.querySelector("button").addEventListener("click", () => {
+      vendorData.hidden = false;
+      getVendors(el._id, el.servicePrice);
+    });
+    serviceData.append(node.content);
+  });
 }
 
 const profileUpdate = async (id, tkn, name, mobile, addr, email) => {
@@ -172,24 +207,30 @@ category.addEventListener("click", async () => {
     },
   });
   if (res.data.status === "Success") {
-    const node = template.cloneNode(true);
-    res.data.data.forEach((el) => {
-      node.innerHTML = ` <div class="card"s>
-            <h3>${el.categoryName}</h3>
-        </div> `;
-      node.content.querySelector("div").addEventListener("click", () => {
-        getServices(el._id);
-      });
-      categorydata.append(node.content);
-    });
+    addCatDiv(res);
   } else {
     console.log(res.data.message);
   }
 });
 
+const addCatDiv = (res) => {
+  const node = template.cloneNode(true);
+  res.data.data.forEach((el) => {
+    node.innerHTML = `     
+        <div class="card"s>
+              <h3>${el.categoryName}</h3>
+              </div>`;
+    node.content.querySelector("div").addEventListener("click", () => {
+      getServices(el._id);
+    });
+    categorydata.append(node.content);
+  });
+}
+
 bookform.addEventListener("submit", (e) => {
   e.preventDefault();
 });
+
 profile.addEventListener("click", async () => {
   profDiv.hidden = false;
   alertDiv.hidden = true;
@@ -230,7 +271,7 @@ profile.addEventListener("click", async () => {
   });
 });
 
-async function getBookings(){
+async function getBookings() {
   const res = await axios.get(`${window.location.origin}/api/booking/${userid}`, {
     headers: {
       Authorization: tkn,
@@ -252,7 +293,7 @@ async function getBookings(){
       <th>totalPrice</th>
     </tr> 
   </table>`
-  bookDiv.append(node.content);
+    bookDiv.append(node.content);
     res.data.Bookings.forEach((el) => {
       const node1 = template.cloneNode(true);
       node1.innerHTML = `<tr>
@@ -272,19 +313,21 @@ async function getBookings(){
     alert(res.data.message);
   }
 }
-getBooking.addEventListener("click",  () => {
+getBooking.addEventListener("click", () => {
   profDiv.hidden = true;
   alertDiv.hidden = true;
   categorydata.hidden = true;
   serviceData.hidden = true;
   vendorData.hidden = true;
   book.hidden = true;
-  bookDiv.hidden = false; 
+  bookDiv.hidden = false;
   getBookings();
 });
 
 logout.addEventListener("click", () => {
   localStorage.removeItem("token");
   localStorage.removeItem("userid");
-  location.href = "../index.html";
+  location.href = "/";
 });
+
+createCategory.addEventListener('click', newCategory);
