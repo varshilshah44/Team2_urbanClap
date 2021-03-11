@@ -2,14 +2,9 @@
 
 //BUTTON DECLARATION
 const category = document.getElementById("cat");
-const createCategory = document.getElementById('createCat');
-const getUsers = document.getElementById('getUsers');
-const createService = document.getElementById('service');
 const logout = document.getElementById("logout");
 const profile = document.getElementById("profile");
-const getUser = document.getElementById('getUsers');
 const getBooking = document.getElementById("getBooking");
-const getAllBooking = document.getElementById('getAllBooking');
 ///
 
 const categorydata = document.getElementById("categoryData");
@@ -94,28 +89,31 @@ async function getVendors(serviceid, servicePrice) {
 }
 
 const addVendorsDiv = (res) => {
-  vendorData.innerHTML = "";
-  res.data.vendors.forEach((el) => {
-    const node = template.cloneNode(true);
-    node.innerHTML = `<div class="vendorcard">
-          <img
-            src="../public/images/user.png"
-            alt="Avatar"
-            style="width: 40%; margin-left: 30%"
-          />
-          <div class="container">
-            <h4 style="text-align:center;"><b>${el.userName}</b></h4>
-            <p style="text-align:center;">${el.userMobile}</p>
-            <p style="text-align:center;">${el.userAddress}</p>
-            <p style="text-align:center;"><button>Choose</button></p>
-          </div>
-        </div>`;
-    node.content.querySelector("button").addEventListener("click", () => {
-      book.hidden = false;
-      booking(el._id, el.userName, this.serviceid, this.servicePrice);
+  if (!admin) {
+
+    vendorData.innerHTML = "";
+    res.data.vendors.forEach((el) => {
+      const node = template.cloneNode(true);
+      node.innerHTML = `<div class="vendorcard">
+            <img
+              src="../public/images/user.png"
+              alt="Avatar"
+              style="width: 40%; margin-left: 30%"
+            />
+            <div class="container">
+              <h4 style="text-align:center;"><b>${el.userName}</b></h4>
+              <p style="text-align:center;">${el.userMobile}</p>
+              <p style="text-align:center;">${el.userAddress}</p>
+              <p style="text-align:center;"><button>Choose</button></p>
+            </div>
+          </div>`;
+      node.content.querySelector("button").addEventListener("click", () => {
+        book.hidden = false;
+        booking(el._id, el.userName, this.serviceid, this.servicePrice);
+      });
+      vendorData.append(node.content);
     });
-    vendorData.append(node.content);
-  });
+  }
 }
 
 //PRofile FOrm
@@ -135,24 +133,6 @@ async function getServices(id) {
   }
 }
 
-const newCategory = async () => {
-  console.log('CREATE CAT!!')
-  const node = template.cloneNode(true);
-  node.innerHTML = `     
-  <input id="newCategory" class="form-control" type="text" />
-  `;
-  categorydata.append(node.content);
-  const catName = document.getElementById('newCategory');
-  const res = await axios.put(`${window.location.origin}/api/category`,{
-    categoryName: catName.value
-  },{
-    headers: {
-      Authorization: tkn,
-    }
-  })
-  console.log(res.data);
-}
-
 const addServiceDiv = (res) => {
   serviceData.innerHTML = "";
   const node = template.cloneNode(true);
@@ -162,12 +142,31 @@ const addServiceDiv = (res) => {
         <p>${el.serviceDescription}</p>
         <p>price : ${el.servicePrice}</p>
         <p>time : ${el.serviceTime}</p>
-        <p><button>Vendors</button></p>
+        <p><button id="vendor">Vendors</button></p>
+        <button type="button" id="${el.serviceName}" hidden>Delete Service</button>
       </div>`;
-    node.content.querySelector("button").addEventListener("click", () => {
+    node.content.querySelector("#vendor").addEventListener("click", () => {
       vendorData.hidden = false;
       getVendors(el._id, el.servicePrice);
     });
+    if (admin) {
+      node.content.querySelector("#vendor").hidden = true;
+      console.log(el.serviceName)
+      let x = node.content.querySelectorAll(`button`)
+      x[x.length - 1].hidden = false;
+      const delCat = node.content.querySelector(`div`);
+      x[x.length - 1].addEventListener("click", async () => {
+        console.log(el._id)
+        const res = await axios.delete(`${window.location.origin}/api/service/${el._id}`, {
+          headers: {
+            Authorization: tkn,
+          }
+        });
+        delCat.remove();
+      })
+    } else if (!admin) {
+      node.content.querySelector("#vendor").hidden = false;
+    }
     serviceData.append(node.content);
   });
 }
@@ -217,12 +216,26 @@ const addCatDiv = (res) => {
   const node = template.cloneNode(true);
   res.data.data.forEach((el) => {
     node.innerHTML = `     
-        <div class="card"s>
+        <div class="card">
               <h3>${el.categoryName}</h3>
+              <button type="button" style="display: none">Delete Category</button>
               </div>`;
-    node.content.querySelector("div").addEventListener("click", () => {
+    node.content.querySelector("h3").addEventListener("click", () => {
       getServices(el._id);
     });
+    // DELETE CATEGORY EVENT
+    if (admin) {
+      node.content.querySelector(`button`).style.display = "block";
+      const delCat = node.content.querySelector(`div`);
+      node.content.querySelector(`button`).addEventListener("click", async () => {
+        const res = await axios.delete(`${window.location.origin}/api/category/${el._id}`, {
+          headers: {
+            Authorization: tkn,
+          }
+        });
+        delCat.remove();
+      })
+    }
     categorydata.append(node.content);
   });
 }
@@ -330,4 +343,3 @@ logout.addEventListener("click", () => {
   location.href = "/";
 });
 
-createCategory.addEventListener('click', newCategory);

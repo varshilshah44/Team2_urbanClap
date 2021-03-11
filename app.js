@@ -19,7 +19,9 @@ app.engine('html', cons.swig)
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 app.use(express.static(path.join(__dirname)));
-app.use(logger('dev'));
+app.use((logger(
+  // 'dev',
+  { 'stream': log.stream })));
 app.use(cors())
 //app.use(helmet())
 app.use(express.json());
@@ -30,22 +32,22 @@ app.use('', indexRouter);
 // app.use('/admin', indexRouter);
 app.use('/users', usersRouter);
 
-app.use(`/api/user`,userRouter);
-app.use('/api/vendor',userRouter);
-app.use('/api/booking',bookingRouter);
-app.use('/api/category',categoryRouter);
-app.use('/api/service',serviceRouter);
+app.use(`/api/user`, userRouter);
+app.use('/api/vendor', userRouter);
+app.use('/api/booking', bookingRouter);
+app.use('/api/category', categoryRouter);
+app.use('/api/service', serviceRouter);
 // catch 404 and forward to error handler
 
-app.use((err,req,res,next) => {
-  res.json({ 
-      status:'error',
-      statusCode:err.statusCode,
-      message:err.message
-  })  
+app.use((err, req, res, next) => {
+  res.json({
+    status: 'error',
+    statusCode: err.statusCode,
+    message: err.message
+  })
   console.log(err.stack)
-  
-next(); 
+
+  next();
 })
 
 module.exports = app;
