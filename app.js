@@ -11,6 +11,8 @@ const userRouter = require('./routes/userRoute');
 const bookingRouter = require('./routes/bookingRoute');
 const categoryRouter = require('./routes/categoryRoute');
 const serviceRouter = require('./routes/serviceRoute');
+const log = require('./utils/log')
+
 
 var app = express();
 

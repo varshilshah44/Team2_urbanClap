@@ -166,7 +166,6 @@ const getAllBookings = async () => {
         <tr>
           <th>bookingStatus</th>
           <th>createdAt</th>
-          <th>_id</th>
           <th>service</th> 
           <th>vendor</th>
           <th>user</th>
@@ -178,13 +177,16 @@ const getAllBookings = async () => {
       </table>`
         bookDiv.append(node.content);
         res.data.Bookings.forEach((el) => {
+            if (!el.serviceId) {
+                el.serviceId.serviceName = 'deleted';
+                el.totalPrice = 0;
+            }
             console.log(el.userId.userName)
             const node1 = template.cloneNode(true);
             node1.innerHTML = `<tr>
             <td>${el.bookingStatus}</td>
             <td>${el.createdAt}</td>
-            <td>${el._id}</td>
-            <td>${el.serviceId.serviceName} </td>
+            <td>${el.serviceId.serviceName}</td>
             <td>${el.vendorId.userName}</td>
             <td>${el.userId.userName}</td>
             <td>${el.bookingDate}</td>
