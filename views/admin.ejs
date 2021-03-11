@@ -128,7 +128,13 @@
           <td><%= el.userAddress %></td>
           <td><%= el.userRole %></td>
           <td><%= el.isActive %></td>
-          <td><button>Block/Unblock</button></td>
+          <td><button onclick="onBlockUnblock('<%= el._id %>','<%= el.isActive %>')">
+            <% if(el.isActive) { %>
+              block
+            <%} else {%>
+              unblock
+            <% } %>
+          </button></td>
         </tr>
       <% })} %>
         </table>

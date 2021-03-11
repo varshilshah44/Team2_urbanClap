@@ -28,7 +28,6 @@ const template = document.getElementById("template");
 let serviceid;
 let vendorid;
 
-
 function booking(vendorid, userName, serviceid, servicePrice) {
   serviceid = serviceid;
   vendorid = vendorid;
@@ -230,12 +229,15 @@ profile.addEventListener("click", async () => {
   });
 });
 
-async function getBookings(){
-  const res = await axios.get(`${window.location.origin}/api/booking/${userid}`, {
-    headers: {
-      Authorization: tkn,
-    },
-  });
+async function getBookings() {
+  const res = await axios.get(
+    `${window.location.origin}/api/booking/${userid}`,
+    {
+      headers: {
+        Authorization: tkn,
+      },
+    }
+  );
   if (res.data.status === "success") {
     bookDiv.innerHTML = "";
     const node = template.cloneNode(true);
@@ -251,8 +253,8 @@ async function getBookings(){
       <th>bookingStatus</th>
       <th>totalPrice</th>
     </tr> 
-  </table>`
-  bookDiv.append(node.content);
+  </table>`;
+    bookDiv.append(node.content);
     res.data.Bookings.forEach((el) => {
       const node1 = template.cloneNode(true);
       node1.innerHTML = `<tr>
@@ -272,14 +274,14 @@ async function getBookings(){
     alert(res.data.message);
   }
 }
-getBooking.addEventListener("click",  () => {
+getBooking.addEventListener("click", () => {
   profDiv.hidden = true;
   alertDiv.hidden = true;
   categorydata.hidden = true;
   serviceData.hidden = true;
   vendorData.hidden = true;
   book.hidden = true;
-  bookDiv.hidden = false; 
+  bookDiv.hidden = false;
   getBookings();
 });
 

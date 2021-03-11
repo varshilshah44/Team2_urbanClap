@@ -11,7 +11,7 @@ const {
 const {
   findServiceByVendor,
   removeVendorIntoService,
-  addVendorIntoService
+  addVendorIntoService,
 } = require("../services/service");
 // this is for adding user/vendor details into the collection
 exports.signup = async (req, res, next) => {
@@ -150,6 +150,24 @@ exports.updateUser = async (req, res, next) => {
     } catch (err) {
       return next(new appError(err.message, 500));
     }
+  } else if (req.user.userRole === "admin") {
+    const bodyArr = ["isActive"]; //user can only update from this fields
+    for (let i of Object.keys(req.body)) {
+      //excluding other fields from req.body
+      if (!bodyArr.includes(i)) {
+        delete req.body[i];
+      }
+    }
+    try {
+      req.body.updatedAt = Date.now();
+      await update(req.params.userid, req.body); //update user by id
+
+      res.status(201).json({
+        status: "success",
+      });
+    } catch (err) {
+      return next(new appError(err.message, 500));
+    }
   } else {
     return next(new appError("you are not logged in", 500));
   }
@@ -167,7 +185,8 @@ exports.deleteUser = async (req, res, next) => {
         // checking user is vendor or not
         const services = await findServiceByVendor(req.user._id); //finding services provided by this vendor
         services.forEach(async (item) => {
-          await removeVendorIntoService(   //pop vendorid from services
+          await removeVendorIntoService(
+            //pop vendorid from services
             item._id,
             req.user._id
           );

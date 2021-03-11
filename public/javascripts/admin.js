@@ -1,3 +1,4 @@
+
 const addCategoryDiv = document.getElementById("addcategory");
 const displayServicesDiv = document.getElementById("displayservices");
 const addserviceDiv = document.getElementById("addservice");
@@ -9,8 +10,8 @@ const category = () => {
 };
 
 const users = () => {
-    location.href = "/users";
-}
+  location.href = "/users";
+};
 
 const addnewcategory = () => {
   addCategoryDiv.style.display = "block";
@@ -40,10 +41,10 @@ const onaddservice = async (catid) => {
   const res = await axios.post(
     `${window.location.origin}/api/service/${catid}`,
     {
-      serviceName: document.getElementById('servicename').value,
-      servicePrice: document.getElementById('serviceprice').value,
-      serviceDescription: document.getElementById('servicedescription').value,
-      serviceTime:document.getElementById('servicetime').value
+      serviceName: document.getElementById("servicename").value,
+      servicePrice: document.getElementById("serviceprice").value,
+      serviceDescription: document.getElementById("servicedescription").value,
+      serviceTime: document.getElementById("servicetime").value,
     },
     {
       headers: {
@@ -51,10 +52,33 @@ const onaddservice = async (catid) => {
       },
     }
   );
-  if(res.data.status === "Success"){
-      alert("added");
-      addserviceDiv.style.display = "none";
-      location.href = "/services?id=" + catid;
+  if (res.data.status === "Success") {
+    alert("added");
+    addserviceDiv.style.display = "none";
+    location.href = "/services?id=" + catid;
+  } else {
+    alert(res.data.message);
+  }
+};
+
+const onBlockUnblock = async (userid, isActive) => {
+  if(isActive) isActive = false;
+  else isActive = true;  
+  alert(isActive)
+  const res = await axios.put(
+    `${window.location.origin}/api/user/${userid}`,
+    {
+      isActive:isActive,
+    },
+    {
+      headers: {
+        Authorization: tkn,
+      },
+    }
+  );
+  console.log(res.data)
+  if(res.data.status === "success"){
+  location.href = "/users";
   }
   else{
       alert(res.data.message);
@@ -66,8 +90,8 @@ const addservice = () => {
 };
 
 const onselectVendor = (id) => {
-    location.href = "/vendors?id=" + id;
-}
+  location.href = "/vendors?id=" + id;
+};
 
 const onSelectCategory = (id) => {
   location.href = "/services?id=" + id;
