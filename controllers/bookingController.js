@@ -81,6 +81,17 @@ exports.getBookings = async (req, res, next) => {
           Bookings,
         });
       }
+      else if(!req.params.userid && req.params.bookingstatus) {
+        //if only userId in params then getAllbookings based on userid
+        const obj = {
+          bookingStatus: req.params.status,
+        };
+        const Bookings = await getBookingByuserIdAndbookingStatus(obj);
+        res.status(200).json({
+          status: "success",
+          Bookings,
+        });
+      }
     } else {
       // this else block for user/vendor
       if (req.params.userid == req.user._id) {

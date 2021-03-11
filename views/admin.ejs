@@ -29,7 +29,8 @@
       <button onclick="users()" type="button" id="getBooking">
         Get All Users
       </button>
-      <button type="button" id="profile">Get Profile</button>
+      <button onclick="bookings()" type="button" id="profile">Get Bookings</button>
+      <button onclick="profile()" type="button" id="profile">Get Profile</button>
       <button onclick="logout()" type="button" id="logout">Logout</button>
     </div>
     <div>
@@ -38,8 +39,11 @@
         Add new Category
       </button>
       <% data.categories.forEach(el => { %>
-      <div class="card" onclick="onSelectCategory('<%= el._id %>')">
-        <h3><%= el.categoryName %></h3>
+      <div class="card" style="margin-top:10px;background-color:cornsilk;">
+        <h3><%= el.categoryName %>
+          <button onclick="onSelectCategory('<%= el._id %>')" style="background-color:darkgray;float:left;" style="float:right;">services</button>
+          <button style="background-color:darkgray;float:right;" onclick="oncategorydelete('<%= el._id %>')">Delete</button>
+        </h3>
       </div>
       <% }) %> <%}%>
     </div>
@@ -52,13 +56,13 @@
     </div>
 
     <div id="displayservices">
-      <% if(data.services) { %>
-      <button onclick="addservice()" style="float: left; margin-top: 30px">
-        Add new Service
-      </button>
-      <% data.services.forEach(el => { %>
+       <% if(data.services) { %>
+      <button onclick="addservice()" style="float: right; margin-top: 30px; margin-right:30px;">
+          Add new Service
+      </button>   
+       <% data.services.forEach(el => { %>
       <div
-        style="float: left; margin-top: 70px; margin-left: 30px"
+        style="float: left;margin-top: 100px; background-color:cornsilk; margin-left:80px;"
         class="card1"
       >
         <h1><%= el.serviceName %></h1>
@@ -67,30 +71,30 @@
         <p>time : <%= el.serviceTime %></p>
         <p>
           <button onclick="onselectVendor('<%= el._id %>')">Vendors</button>
+          <button onclick="onservicedelete('<%= el._id %>','<%= el.categoryId %>')">Delete</button>
         </p>
       </div>
-      <% }) %> <% } %>
+      <% }) %>
+      <% } %>
     </div>
 
-    <div style="margin-top: 300px; display: none" id="addservice">
-      <h3 style="text-align: center">Add Service</h3>
-      <label style="margin-left: 40%"
+    <div style="display: none; margin-top:400px;" id="addservice">
+      <label style="margin-left: 40%; margin-top:20px;"
         >Name : <input type="text" id="servicename"
       /></label>
-      <label style="margin-left: 40%"
+      <label style="margin-left: 40%;"
         >Price : <input type="number" id="serviceprice"
       /></label>
-      <label style="margin-left: 40%"
+      <label style="margin-left: 40%;"
         >serviceDescription : <input type="text" id="servicedescription"
       /></label>
-      <label style="margin-left: 40%"
+      <label style="margin-left: 40%;"
         >serviceTime : <input type="time" id="servicetime"
       /></label>
       <button onclick="onaddservice('<%= data.categoryid %>')">
         Add service
       </button>
     </div>
-
     <div id="displayvendors">
       <% if(data.vendors) { %> <% data.vendors.forEach(el => { %>
       <div style="margin-top: 50px; margin-left: 30px" class="vendorcard">
@@ -118,7 +122,8 @@
             <th>userAddress</th> 
             <th>userRole</th>
             <th>isActive</th>
-            <th>Block</th>
+            <th>Action</th>
+            <th>Bookings</th>
           </tr> 
       <% data.users.forEach(el => { %>
         <tr>
@@ -128,17 +133,75 @@
           <td><%= el.userAddress %></td>
           <td><%= el.userRole %></td>
           <td><%= el.isActive %></td>
-          <td><button onclick="onBlockUnblock('<%= el._id %>','<%= el.isActive %>')">
-            <% if(el.isActive) { %>
-              block
-            <%} else {%>
-              unblock
-            <% } %>
-          </button></td>
+          <td>
+          <% if(el.isActive) { %>
+          <button onclick="onBlockUnblock('<%= el._id %>',false)">block</button>
+          <% }
+           else {%>
+            <button onclick="onBlockUnblock('<%= el._id %>',true)">unblock</button>  
+          <% } %>
+         </td>
+         <td><button onclick="bookings('<%= el._id %>')">Bookings</button></td>
         </tr>
       <% })} %>
         </table>
     </div>
+
+    <div id="displaybookings">
+      <% if(data.bookings) { %>
+        <button onclick="onbookingstatus('pending','<%= data.user %>')" style="margin-top:20px; margin-left:10px; background-color:darkgray;">pending</button>
+        <button onclick="onbookingstatus('accepted','<%= data.user %>')" style="margin-top:20px; margin-left:10px; background-color:darkgray;">accepted</button>   
+        <button onclick="onbookingstatus('inprogress','<%= data.user %>')" style="margin-top:20px; margin-left:10px; background-color:darkgray;">inprogress</button>   
+        <button onclick="onbookingstatus('cancelled','<%= data.user %>')" style="margin-top:20px; margin-left:10px; background-color:darkgray;">cancelled</button>   
+        <button onclick="onbookingstatus('completed','<%= data.user %>')" style="margin-top:20px; margin-left:10px; background-color:darkgray;">completed</button>   
+       
+        <table id="customers" style="margin-top:20px;">
+          <tr>
+            <th>bookingDate</th>
+            <th>bookingTime</th>
+            <th>userName</th>
+            <th>userMobile</th>
+            <th>vendorName</th> 
+            <th>vendorMobile</th>
+            <th>serviceName</th>
+            <th>servicePrice</th>
+            <th>qty</th>
+            <th>totalPrice</th>
+            <th>bookingStatus</th>
+          </tr> 
+        <% data.bookings.forEach(el => { %>
+          <tr>
+            <td><%= el.bookingDate %></td>
+            <td><%= el.bookingTime %></td>
+            <td><%= el.userId.userName %></td>
+            <td><%= el.userId.userMobile %></td>
+            <td><%= el.vendorId.userName %></td>
+            <td><%= el.vendorId.userMobile %></td>
+            <% if(!el.serviceId){ %>
+              <td>Deleted</td>
+              <td>0</td>
+            <%}else{%>
+            <td><%= el.serviceId.serviceName %></td>
+            <td><%= el.serviceId.servicePrice %></td>
+           <% } %>
+            <td><%= el.qty %></td>
+            <td><%= el.totalPrice %></td>
+            <td><%= el.bookingStatus %></td>   
+          </tr>
+        <%})
+         } %> 
+    </div>
+
+    <div id="displayprofile">
+        <% if(data.profile) { %>
+          <h2 style="text-align:center; margin-top:30px;">Profile</h2>
+          <label style="margin-left:40%;margin-top:10px;">UserName : <input id="username" type="text" value='<%= data.profile.userName %>'> </label>
+          <label style="margin-left:40%;margin-top:10px;">UserMobile : <input id="usermobile" type="text" value='<%= data.profile.userMobile %>'> </label>
+          <label style="margin-left:40%;margin-top:10px;">UserAddress : <input id="useraddress" type="text" value='<%= data.profile.userAddress %>'> </label>
+          <button onclick="onupdateprofile()" style="margin-left:50%;margin-top:10px;">Update</button>
+       <% }%>
+    </div>
+
 
 
   </body>

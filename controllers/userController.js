@@ -51,7 +51,7 @@ exports.login = async (req, res, next) => {
     const token = tokenGenerate(User._id); //generating token
 
     User.userToken = token; //add token and expiretoken details in collection
-    User.userTokenExpire = Date.now() + 5 * 60 * 60 * 1000;
+    User.userTokenExpire = Date.now() + (5 * 60 * 60 * 1000);
     await User.save({
       validateBeforeSave: false,
     });
@@ -128,6 +128,7 @@ exports.getUsers = async (req, res, next) => {
 };
 
 exports.updateUser = async (req, res, next) => {
+  console.log(req.body.isActive)
   if (!req.params.userid) {
     return next(new appError("Please provide the userId", 500));
   }

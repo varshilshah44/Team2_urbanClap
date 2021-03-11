@@ -20,7 +20,7 @@ exports.getAll = (categoryid) => {
   return service
     .find(
       { categoryId: categoryid },
-      "serviceName servicePrice serviceDescription serviceTime vendorId"
+      "serviceName servicePrice serviceDescription serviceTime vendorId categoryId"
     )
     .populate("vendorId", "userName -_id");
 };

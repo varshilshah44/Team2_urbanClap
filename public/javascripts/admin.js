@@ -1,4 +1,3 @@
-
 const addCategoryDiv = document.getElementById("addcategory");
 const displayServicesDiv = document.getElementById("displayservices");
 const addserviceDiv = document.getElementById("addservice");
@@ -9,9 +8,22 @@ const category = () => {
   location.href = "/categories";
 };
 
+const profile = () => {
+  location.href = `/profile?userid=${localStorage.getItem('userid')}`;
+}
+
 const users = () => {
   location.href = "/users";
 };
+
+const bookings = (userid) => {
+    if(!userid){
+    location.href = '/bookings';
+    }
+    else{
+    location.href = `/bookings?userid=${userid}`;       
+    }
+}
 
 const addnewcategory = () => {
   addCategoryDiv.style.display = "block";
@@ -61,14 +73,11 @@ const onaddservice = async (catid) => {
   }
 };
 
-const onBlockUnblock = async (userid, isActive) => {
-  if(isActive) isActive = false;
-  else isActive = true;  
-  alert(isActive)
+const onBlockUnblock = async (userid,active) => {
   const res = await axios.put(
     `${window.location.origin}/api/user/${userid}`,
     {
-      isActive:isActive,
+      isActive:active,
     },
     {
       headers: {
@@ -84,6 +93,66 @@ const onBlockUnblock = async (userid, isActive) => {
       alert(res.data.message);
   }
 };
+
+const onupdateprofile = async () => {
+   if(!document.getElementById('username').value || !document.getElementById('useraddress').value || !document.getElementById('usermobile').value){
+    alert("not allowed");
+   }
+   else{
+   const res =  await axios.put(`${window.location.origin}/api/user/${localStorage.getItem('userid')}`,{
+      userName:document.getElementById('username').value,
+      userAddress:document.getElementById('useraddress').value,
+      userMobile:document.getElementById('usermobile').value
+   },{
+     headers:{
+      Authorization: tkn
+     }
+   })
+   if(res.data.status === "success"){ 
+    location.href = `/profile?userid=${localStorage.getItem('userid')}`;
+   }  
+   else{
+     alert(res.data.message);
+   }
+  }
+}
+
+const oncategorydelete = async (catid) => {
+  const res = await axios.delete(`${window.location.origin}/api/category/${catid}`,{
+    headers:{
+      Authorization: tkn
+    }
+  })
+  if(res.data.status === "Success"){
+    location.href = "/categories";
+  }
+  else{
+    alert(res.data.message);
+  }
+}
+
+const onservicedelete = async (serviceid,catid) => {
+  const res = await axios.delete(`${window.location.origin}/api/service/${serviceid}`,{
+    headers:{
+      Authorization: tkn
+    }
+  })
+  if(res.data.status === "Success"){
+    location.href = "/services?id=" + catid;
+  }
+  else{
+    alert(res.data.message);
+  }
+}
+
+const onbookingstatus = (status,userid) => {
+  if(!userid){
+    location.href = `/bookings?status=${status}`;
+  }
+  else{
+    location.href = `/bookings?status=${status}?userid=${userid}`;
+  }
+}
 
 const addservice = () => {
   addserviceDiv.style.display = "block";
